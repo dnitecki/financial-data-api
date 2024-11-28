@@ -1,4 +1,5 @@
+// activate/deactivate venv
 .venv\Scripts\activate
 deactivate
-//
+// run server
 py manage.py runserver
