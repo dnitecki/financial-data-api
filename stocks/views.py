@@ -34,6 +34,9 @@ class GetStockHistory(APIView):
                 return Response({'data':stockHistory}, status=status.HTTP_200_OK)
             elif period:
                 data = yf.Ticker(ticker)
-                #['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max']
-                stockHistory = data.history(period='12mo')
-                return Response({'data':stockHistory}, status=status.HTTP_200_OK)
+                periods = ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max']
+                if period in periods:
+                    stockHistory = data.history(period=period)
+                    return Response({'data':stockHistory}, status=status.HTTP_200_OK)
+                else:
+                    return Response("Invalid Period. Supported Period: '1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max'", status=status.HTTP_400_BAD_REQUEST)
